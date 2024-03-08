@@ -1,8 +1,9 @@
 Attribute VB_Name = "Module1"
-'SolderOrder(CellRef As String)
-Function SolderOrder(CellRef As String) As Integer
+'
+Function GetAttrValue(CellRef As String, AttrName As String) As String
+' Parse field such as "DIELECTRIC":"X7R";"DNP":"F";"PARTNO":"1501";;"SOLDERORDER":"18";;"TOLERANCE":"10%";"VALUE":"1uF";;"VOLTAGE":"25V";
 
-Dim textOutput As String
+Dim AttrNameValue As String
 Dim attributes() As String
 Dim countArray As Integer
 
@@ -12,22 +13,18 @@ attributes = Split(CellRef, ";")
 countArray = ArrayLen(attributes)
 
 For i = 0 To (countArray - 1)
-    If InStr(1, attributes(i), "SOLDERORDER", vbTextCompare) Then
-        textOutput = attributes(i)
+    If InStr(1, attributes(i), AttrName, vbTextCompare) Then
+        AttrNameValue = attributes(i)
     End If
 Next i
 ' remove "SOLDERORDER":"0"
 Dim lgthChar As Integer
 
-lgthChar = 15 'Len("SOLDERORDER")
-textOutput = Replace(textOutput, "SOLDERORDER", "")
-textOutput = Replace(textOutput, ":", "")
-textOutput = Replace(textOutput, """", "")
-If StrComp(textOutput, "", vbTextCompare) Then
-    SolderOrder = CInt(textOutput)
-    Else
-    SolderOrder = CInt("-2")
-End If
+lgthChar = Len(AttrName)
+AttrNameValue = Replace(AttrNameValue, AttrName, "")
+AttrNameValue = Replace(AttrNameValue, ":", "")
+AttrNameValue = Replace(AttrNameValue, """", "")
+GetAttrValue = AttrNameValue
 
 End Function
 
