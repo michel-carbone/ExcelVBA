@@ -23,7 +23,11 @@ lgthChar = 15 'Len("SOLDERORDER")
 textOutput = Replace(textOutput, "SOLDERORDER", "")
 textOutput = Replace(textOutput, ":", "")
 textOutput = Replace(textOutput, """", "")
-SolderOrder = CInt(textOutput)
+If StrComp(textOutput, "", vbTextCompare) Then
+    SolderOrder = CInt(textOutput)
+    Else
+    SolderOrder = CInt("-2")
+End If
 
 End Function
 
