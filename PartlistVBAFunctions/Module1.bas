@@ -25,7 +25,16 @@ AttrNameValue = Replace(AttrNameValue, AttrName, "")
 AttrNameValue = Replace(AttrNameValue, ":", "")
 AttrNameValue = Replace(AttrNameValue, """", "")
 GetAttrValue = AttrNameValue
+End Function
 
+
+Function SolderOrder(CellRef As String) As Integer
+    TxtValue = GetAttrValue(CellRef, "SOLDERORDER")
+    If StrComp(TxtValue, "", vbTextCompare) Then
+        SolderOrder = CInt(TxtValue)
+        Else
+        SolderOrder = CInt("-2")
+    End If
 End Function
 
 Function ColIndex(searchColName As String) As Integer
